@@ -10,5 +10,4 @@ public class Transaction {
     private String vendor;
     private double amount;
 
-
 }

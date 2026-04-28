@@ -10,4 +10,14 @@ public class Transaction {
     private String vendor;
     private double amount;
 
+    //  Step 2: Generate constructor (for transaction object)
+    public Transaction(String date, String time, String description, String vendor, double amount) {
+        this.date = date;
+        this.time = time;
+        this.description = description;
+        this.vendor = vendor;
+        this.amount = amount;
+
+    }
 }
+

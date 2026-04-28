@@ -22,6 +22,7 @@ public class Transaction {
         this.amount = amount;
 
     }
+
     //  Step 3: Generate Getters to access data safely
     public LocalDate getDate() {
         return date;
@@ -43,13 +44,13 @@ public class Transaction {
         return amount;
     }
 
-    // Step 4: Convert Transaction object into a CSV line (saving data)
+    // Step 4: Convert Transaction object into a CSV line (saving data) SERIALIZATION
     public String toCSV() {
         return date + "|" + time + "|" + description + "|" + vendor + "|" + amount;
 
     }
 
-    //  Step 5: Convert CSV line into a Transaction object (when reading file)
+    //  Step 5: Convert CSV line into a Transaction object (when reading file) DESERIALIZATION
     public static Transaction fromCSV(String line) {
         String[] parts = line.split("\\|");
 
@@ -62,6 +63,9 @@ public class Transaction {
         return new Transaction(date, time, description, vendor, amount);
     }
 
-
+    // Display format (user view output)
+    @Override
+    public String toString() {
+        return date + " " + time + " | " + description + " | " + vendor + " | " + String.format("$%.2f", amount);
+    }
 }
-

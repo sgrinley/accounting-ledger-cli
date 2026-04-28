@@ -22,5 +22,26 @@ public class Transaction {
         this.amount = amount;
 
     }
+    //  Step 3: Generate Getters to access data safely
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public LocalTime getTime() {
+        return time;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public String getVendor() {
+        return vendor;
+    }
+
+    public double getAmount() {
+        return amount;
+    }
+
 }
 

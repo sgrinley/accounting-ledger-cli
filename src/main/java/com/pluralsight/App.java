@@ -5,10 +5,10 @@ import java.util.Scanner;
 
 public class App {
 
-    //  Establish Arraylist
+    //  Establish Arraylist (store data)
     static ArrayList<Transaction> transactions = new ArrayList<>();
 
-    //  Establish Scanner
+    //  Establish Scanner (read input data)
     static Scanner scanner = new Scanner(System.in);
 
     // =========================

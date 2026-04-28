@@ -11,12 +11,22 @@ public class App {
     //  Establish Scanner (read input data)
     static Scanner scanner = new Scanner(System.in);
 
-    // =========================
-    // MAIN METHOD (ENTRY POINT)
-    // =========================
     public static void main(String[] args) {
-
+        runHomeScreen();
     }
 
+    //  Create: HOME SCREEN
+    private static void runHomeScreen() {
+        boolean isRunning = true;
 
+        while (isRunning) {
+            System.out.println("""
+                    \n--- HOME SCREEN ---
+                    D) Add Deposit (Credit +)
+                    P) Make Payment (Debit -)
+                    L) Ledger
+                    X) Exit
+                    Enter choice""");
+        }
+    }
 }

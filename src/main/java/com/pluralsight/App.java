@@ -54,12 +54,18 @@ public class App {
             String choice = scanner.nextLine().toLowerCase().trim();
 
             switch (choice) {
-                case "D" -> System.out.println("Add Deposit");
-                case "P" -> System.out.println("Make Payment");
-                case "L" -> runLedgerScreen();
-                case "X" -> inLedger = false;
+                case "A" -> System.out.println("Show all transactions");
+                case "D" -> System.out.println("Show deposits only");
+                case "P" -> System.out.println("Show payments only");
+                case "R" -> runReportsScreen();
+                case "H" -> inLedger = false;
                 default -> System.out.println("Invalid input. Try again!");
             }
         }
     }
+
+    private static void runReportsScreen() {
+    }
+
+
 }

@@ -90,8 +90,7 @@ public class App {
                     LocalDate today = LocalDate.now();
 
                     for (Transaction t : transactions) {
-                        if (t.getDate().getMonthValue() == today.getMonthValue()
-                                && t.getDate().getYear() == today.getYear()) {
+                        if (t.getDate().getMonthValue() == today.getMonthValue() && t.getDate().getYear() == today.getYear()) {
                             System.out.println(t);
                         }
                     }
@@ -103,8 +102,7 @@ public class App {
                     LocalDate previousMonth = today.minusMonths(1);
 
                     for (Transaction t : transactions) {
-                        if (t.getDate().getMonth() == previousMonth.getMonth()
-                                && t.getDate().getYear() == previousMonth.getYear()) {
+                        if (t.getDate().getMonth() == previousMonth.getMonth() && t.getDate().getYear() == previousMonth.getYear()) {
                             System.out.println(t);
                         }
                     }
@@ -132,7 +130,6 @@ public class App {
                     }
                 }
 
-
                 // SEARCH BY VENDOR
                 case "5" -> {
                     System.out.print("Enter vendor: ");
@@ -155,7 +152,7 @@ public class App {
                 // RETURN BACK
                 case "0" -> inReports = false;
 
-                default -> System.out.println("Invalid option.");
+                default -> System.out.println("Invalid input. Try again!");
             }
         }
     }

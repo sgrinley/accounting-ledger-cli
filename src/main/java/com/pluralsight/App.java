@@ -32,8 +32,8 @@ public class App {
             String choice = scanner.nextLine().toUpperCase().trim();
 
             switch (choice) {
-                case "D" -> System.out.println("Add Deposit");
-                case "P" -> System.out.println("Make Payment");
+                case "D" -> addDeposit();
+                case "P" -> addPayment();
                 case "L" -> runLedgerScreen();
                 case "X" -> isRunning = false;
                 default -> System.out.println("Invalid input. Try again!");
@@ -158,7 +158,7 @@ public class App {
         }
     }
 
-//    Add Deposit
+    //  Add Deposit
     private static void addDeposit() {
         System.out.print("Enter Description: ");
         String description = scanner.nextLine();
@@ -176,8 +176,25 @@ public class App {
         transactions.add(deposit);
         System.out.println("Deposit added successfully! ");
 
+    }
 
+    //  Add Payment
+    public static void addPayment() {
+        System.out.print("Enter Description: ");
+        String description = scanner.nextLine();
 
+        System.out.print("Enter Vendor: ");
+        String vendor = scanner.nextLine();
+
+        System.out.print("Enter Amount: ");
+        double amount = Double.parseDouble(scanner.nextLine());
+
+        LocalDate date = LocalDate.now();
+        LocalTime time = LocalTime.now();
+
+        Transaction payment = new Transaction(date, time, description, vendor, amount);
+        transactions.add(payment);
+        System.out.println("Payment added successfully! ");
 
     }
 }

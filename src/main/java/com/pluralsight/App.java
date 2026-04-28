@@ -1,6 +1,7 @@
 package com.pluralsight;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -155,5 +156,28 @@ public class App {
                 default -> System.out.println("Invalid input. Try again!");
             }
         }
+    }
+
+//    Add Deposit
+    private static void addDeposit() {
+        System.out.print("Enter Description: ");
+        String description = scanner.nextLine();
+
+        System.out.print("Enter Vendor: ");
+        String vendor = scanner.nextLine();
+
+        System.out.print("Enter Amount: ");
+        double amount = Double.parseDouble(scanner.nextLine());
+
+        LocalDate date = LocalDate.now();
+        LocalTime time = LocalTime.now();
+
+        Transaction deposit = new Transaction(date, time, description, vendor, amount);
+        transactions.add(deposit);
+        System.out.println("Deposit added successfully! ");
+
+
+
+
     }
 }

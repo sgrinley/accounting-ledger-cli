@@ -43,5 +43,14 @@ public class Transaction {
         return amount;
     }
 
+    // Step 4: Convert Transaction object into a CSV line (saving data)
+    public String toCSV() {
+        return date + "|" + time + "|" + description + "|" + vendor + "|" + amount;
+
+    }
+
+
+
+
 }
 

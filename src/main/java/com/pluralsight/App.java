@@ -28,7 +28,7 @@ public class App {
                     L) Ledger
                     X) Exit
                     Enter choice:""");
-            String choice = scanner.nextLine().toLowerCase().trim();
+            String choice = scanner.nextLine().toUpperCase().trim();
 
             switch (choice) {
                 case "D" -> System.out.println("Add Deposit");
@@ -51,9 +51,9 @@ public class App {
                     D) Deposits
                     P) Payments
                     R) Reports
-                    R) Home
+                    H) Home
                     Enter choice""");
-            String choice = scanner.nextLine().toLowerCase().trim();
+            String choice = scanner.nextLine().toUpperCase().trim();
 
             switch (choice) {
                 case "A" -> System.out.println("Show all transactions");

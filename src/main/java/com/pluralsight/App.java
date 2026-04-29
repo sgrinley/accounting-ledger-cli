@@ -14,7 +14,12 @@ public class App {
     //  Establish Scanner (read input data)
     static Scanner scanner = new Scanner(System.in);
 
+    //  Establish File Name
+    static final String FILE_NAME = "transactions.csv";
+
+    //  Establish Main Method
     public static void main(String[] args) {
+        loadTransactions();
         runHomeScreen();
     }
 
@@ -23,13 +28,14 @@ public class App {
         boolean isRunning = true;
 
         while (isRunning) {
+
             System.out.print("""
                     \n--- HOME SCREEN ---
-                    D) Add Deposit (Credit +)
-                    P) Make Payment (Debit -)
+                    D) Add Deposit
+                    P) Add Payment
                     L) Ledger
                     X) Exit
-                    Enter choice:""");
+                    Enter choice: """);
             String choice = scanner.nextLine().toUpperCase().trim();
 
             switch (choice) {
@@ -37,7 +43,7 @@ public class App {
                 case "P" -> addPayment();
                 case "L" -> runLedgerScreen();
                 case "X" -> isRunning = false;
-                default -> System.out.println("Invalid input. Try again! ");
+                default -> System.out.println("Invalid input.");
             }
         }
     }
@@ -47,23 +53,24 @@ public class App {
         boolean inLedger = true;
 
         while (inLedger) {
+
             System.out.print("""
-                    \n--- LEDGER SCREEN ---
+                    \n--- LEDGER ---
                     A) All Entries
                     D) Deposits
                     P) Payments
                     R) Reports
                     H) Home
-                    Enter choice:""");
+                    Enter choice: """);
             String choice = scanner.nextLine().toUpperCase().trim();
 
             switch (choice) {
-                case "A" -> System.out.println("Show all transactions ");
-                case "D" -> System.out.println("Show deposits only ");
-                case "P" -> System.out.println("Show payments only ");
+                case "A" -> showAllTransactions();
+                case "D" -> showDeposits();
+                case "P" -> showPayments();
                 case "R" -> runReportsScreen();
                 case "H" -> inLedger = false;
-                default -> System.out.println("Invalid input. Try again! ");
+                default -> System.out.println("Invalid input.");
             }
         }
     }
@@ -73,57 +80,50 @@ public class App {
         boolean inReports = true;
 
         while (inReports) {
+
             System.out.print("""
-                    \n--- REPORTS SCREEN ---
+                    \n--- REPORTS ---
                     1) Month To Date
                     2) Previous Month
                     3) Year To Date
                     4) Previous Year
-                    5) Search by Vendor
+                    5) Search Vendor
                     0) Back
-                    Enter choice:""");
-
+                    Enter choice: """);
             String choice = scanner.nextLine().trim();
+            LocalDate today = LocalDate.now();
 
-            // Filter by: MONTH TO DATE
             switch (choice) {
 
+                // Filter by: MONTH TO DATE
                 case "1" -> {
-                    LocalDate today = LocalDate.now();
-
                     for (Transaction t : transactions) {
                         if (t.getDate().getMonthValue() == today.getMonthValue() && t.getDate().getYear() == today.getYear()) {
                             System.out.println(t);
                         }
                     }
                 }
-
                 // Filter by: PREVIOUS MONTH
                 case "2" -> {
-                    LocalDate today = LocalDate.now();
-                    LocalDate previousMonth = today.minusMonths(1);
+                    LocalDate prev = today.minusMonths(1);
 
                     for (Transaction t : transactions) {
-                        if (t.getDate().getMonth() == previousMonth.getMonth() && t.getDate().getYear() == previousMonth.getYear()) {
+                        if (t.getDate().getMonthValue() == prev.getMonthValue() && t.getDate().getYear() == prev.getYear()) {
                             System.out.println(t);
                         }
                     }
                 }
-
                 // Filter by: YEAR TO DATE
                 case "3" -> {
-                    LocalDate today = LocalDate.now();
-
                     for (Transaction t : transactions) {
                         if (t.getDate().getYear() == today.getYear()) {
                             System.out.println(t);
                         }
                     }
                 }
-
                 // Filter by: PREVIOUS YEAR
                 case "4" -> {
-                    int lastYear = LocalDate.now().getYear() - 1;
+                    int lastYear = today.getYear() - 1;
 
                     for (Transaction t : transactions) {
                         if (t.getDate().getYear() == lastYear) {
@@ -131,11 +131,10 @@ public class App {
                         }
                     }
                 }
-
                 // SEARCH BY VENDOR
                 case "5" -> {
                     System.out.print("Enter vendor: ");
-                    String vendor = scanner.nextLine().trim();
+                    String vendor = scanner.nextLine();
 
                     boolean found = false;
 
@@ -147,20 +146,20 @@ public class App {
                     }
 
                     if (!found) {
-                        System.out.println("No transactions found for vendor: ");
+                        System.out.println("No transactions found for vendor: " + vendor);
                     }
                 }
-
                 // RETURN BACK
                 case "0" -> inReports = false;
 
-                default -> System.out.println("Invalid input. Try again! ");
+                default -> System.out.println("Invalid input.");
             }
         }
     }
 
     //  Add Deposit
     private static void addDeposit() {
+
         System.out.print("Enter Description: ");
         String description = scanner.nextLine();
 
@@ -170,18 +169,23 @@ public class App {
         System.out.print("Enter Amount: ");
         double amount = Double.parseDouble(scanner.nextLine());
 
-        LocalDate date = LocalDate.now();
-        LocalTime time = LocalTime.now();
+        Transaction t = new Transaction(
+                LocalDate.now(),
+                LocalTime.now().withNano(0),
+                description,
+                vendor,
+                amount
+        );
 
-        Transaction deposit = new Transaction(date, time, description, vendor, amount);
-        transactions.add(deposit);
-        saveTransaction(deposit);
+        transactions.add(t);
+        saveTransaction(t);
+
         System.out.println("Deposit added successfully! ");
-
     }
 
     //  Add Payment
-    public static void addPayment() {
+    private static void addPayment() {
+
         System.out.print("Enter Description: ");
         String description = scanner.nextLine();
 
@@ -191,33 +195,42 @@ public class App {
         System.out.print("Enter Amount: ");
         double amount = Double.parseDouble(scanner.nextLine());
 
-        LocalDate date = LocalDate.now();
-        LocalTime time = LocalTime.now();
+        Transaction t = new Transaction(
+                LocalDate.now(),
+                LocalTime.now().withNano(0),
+                description,
+                vendor,
+                -amount
+        );
 
-        Transaction payment = new Transaction(date, time, description, vendor, -amount);
-        transactions.add(payment);
-        saveTransaction(payment);
+        transactions.add(t);
+        saveTransaction(t);
+
         System.out.println("Payment added successfully! ");
     }
 
     //  Add: Load Transactions from CSV file
-    static final String FILE_NAME = "transactions.csv";
-
     private static void loadTransactions() {
 
         File file = new File(FILE_NAME);
 
         //  If file doesn't exist, refresh/reload instead of crash
         if (!file.exists()) {
-            System.out.println("No existing transaction file found. Starting fresh. ");
+            System.out.println("No saved transactions found. Starting fresh.");
             return;
         }
 
-        try {
-            BufferedReader reader = new BufferedReader(new FileReader(file));
+        try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+
             String line;
 
             while ((line = reader.readLine()) != null) {
+
+                //  Skip CSV header safely
+                if (line.startsWith("date")) {
+                    continue;
+                }
+
                 if (!line.isBlank()) {
                     transactions.add(Transaction.fromCSV(line));
                 }
@@ -233,20 +246,15 @@ public class App {
     //  Add: Save transaction to CSV file
     private static void saveTransaction(Transaction t) {
 
-        try {
-            BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_NAME, true));
-
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_NAME, true))) {
             writer.write(t.toCSV());
             writer.newLine();
-
-            writer.close();
-
         } catch (IOException e) {
             System.out.println("Error saving transaction. ");
         }
     }
 
-    //    Ledger Helpers (organize ledger display functionality)
+    //  Ledger Helpers (organize ledger display functionality)
     private static void showAllTransactions() {
         for (Transaction t : transactions) {
             System.out.println(t);
@@ -254,18 +262,28 @@ public class App {
     }
 
     private static void showDeposits() {
+        boolean found = false;
+
         for (Transaction t : transactions) {
             if (t.getAmount() > 0) {
                 System.out.println(t);
+                found = true;
             }
         }
+
+        if (!found) System.out.println("No deposits found.");
     }
 
     private static void showPayments() {
+        boolean found = false;
+
         for (Transaction t : transactions) {
             if (t.getAmount() < 0) {
                 System.out.println(t);
+                found = true;
             }
         }
+
+        if (!found) System.out.println("No payments found. ");
     }
 }

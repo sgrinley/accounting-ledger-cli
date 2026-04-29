@@ -214,14 +214,15 @@ public class App {
         }
 
         try {
-            BufferedReader reader = new BufferedReader(new FileReader(FILE_NAME));
+            BufferedReader reader = new BufferedReader(new FileReader(file));
             String line;
 
             while ((line = reader.readLine()) != null) {
-                Transaction t = Transaction.fromCSV(line);
-                transactions.add(t);
+                if (!line.isBlank()) {
+                    transactions.add(Transaction.fromCSV(line));
+                }
             }
-            reader.close();
+
             System.out.println("Transactions loaded successfully! ");
 
         } catch (IOException e) {

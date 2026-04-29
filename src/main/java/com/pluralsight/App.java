@@ -246,12 +246,13 @@ public class App {
         }
     }
 
-//    Ledger Helpers ()
+    //    Ledger Helpers (organize ledger display functionality)
     private static void showAllTransactions() {
         for (Transaction t : transactions) {
             System.out.println(t);
         }
     }
+
     private static void showDeposits() {
         for (Transaction t : transactions) {
             if (t.getAmount() > 0) {
@@ -259,6 +260,7 @@ public class App {
             }
         }
     }
+
     private static void showPayments() {
         for (Transaction t : transactions) {
             if (t.getAmount() < 0) {
@@ -266,5 +268,4 @@ public class App {
             }
         }
     }
-
 }

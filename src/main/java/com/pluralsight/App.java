@@ -1,9 +1,6 @@
 package com.pluralsight;
 
-import java.io.BufferedReader;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -150,7 +147,7 @@ public class App {
                     }
 
                     if (!found) {
-                        System.out.println("No transactions found for vendor: " + vendor);
+                        System.out.println("No transactions found for vendor: ");
                     }
                 }
 
@@ -178,6 +175,7 @@ public class App {
 
         Transaction deposit = new Transaction(date, time, description, vendor, amount);
         transactions.add(deposit);
+        saveTransaction(deposit);
         System.out.println("Deposit added successfully! ");
 
     }
@@ -198,16 +196,25 @@ public class App {
 
         Transaction payment = new Transaction(date, time, description, vendor, -amount);
         transactions.add(payment);
+        saveTransaction(payment);
         System.out.println("Payment added successfully! ");
     }
 
-//  Add: Load Transactions from CSV file
-    static final String FileName = "transsction.csv";
+    //  Add: Load Transactions from CSV file
+    static final String FILE_NAME = "transactions.csv";
 
     private static void loadTransactions() {
 
+        File file = new File(FILE_NAME);
+
+        //  If file doesn't exist, refresh/reload instead of crash
+        if (!file.exists()) {
+            System.out.println("No existing transaction file found. Starting fresh. ");
+            return;
+        }
+
         try {
-            BufferedReader reader = new BufferedReader(new FileReader(FileName));
+            BufferedReader reader = new BufferedReader(new FileReader(FILE_NAME));
             String line;
 
             while ((line = reader.readLine()) != null) {
@@ -218,7 +225,23 @@ public class App {
             System.out.println("Transactions loaded successfully! ");
 
         } catch (IOException e) {
-            System.out.println("File not found. Please make sure the file is available and not locked and then try again. ");
+            System.out.println("Error loading transaction file. ");
+        }
+    }
+
+    //  Add: Save transaction to CSV file
+    private static void saveTransaction(Transaction t) {
+
+        try {
+            BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_NAME, true));
+
+            writer.write(t.toCSV());
+            writer.newLine();
+
+            writer.close();
+
+        } catch (IOException e) {
+            System.out.println("Error saving transaction. ");
         }
     }
 }

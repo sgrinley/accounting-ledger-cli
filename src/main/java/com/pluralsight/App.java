@@ -245,4 +245,26 @@ public class App {
             System.out.println("Error saving transaction. ");
         }
     }
+
+//    Ledger Helpers ()
+    private static void showAllTransactions() {
+        for (Transaction t : transactions) {
+            System.out.println(t);
+        }
+    }
+    private static void showDeposits() {
+        for (Transaction t : transactions) {
+            if (t.getAmount() > 0) {
+                System.out.println(t);
+            }
+        }
+    }
+    private static void showPayments() {
+        for (Transaction t : transactions) {
+            if (t.getAmount() < 0) {
+                System.out.println(t);
+            }
+        }
+    }
+
 }

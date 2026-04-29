@@ -1,5 +1,9 @@
 package com.pluralsight;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -36,7 +40,7 @@ public class App {
                 case "P" -> addPayment();
                 case "L" -> runLedgerScreen();
                 case "X" -> isRunning = false;
-                default -> System.out.println("Invalid input. Try again!");
+                default -> System.out.println("Invalid input. Try again! ");
             }
         }
     }
@@ -53,16 +57,16 @@ public class App {
                     P) Payments
                     R) Reports
                     H) Home
-                    Enter choice""");
+                    Enter choice:""");
             String choice = scanner.nextLine().toUpperCase().trim();
 
             switch (choice) {
-                case "A" -> System.out.println("Show all transactions");
-                case "D" -> System.out.println("Show deposits only");
-                case "P" -> System.out.println("Show payments only");
+                case "A" -> System.out.println("Show all transactions ");
+                case "D" -> System.out.println("Show deposits only ");
+                case "P" -> System.out.println("Show payments only ");
                 case "R" -> runReportsScreen();
                 case "H" -> inLedger = false;
-                default -> System.out.println("Invalid input. Try again!");
+                default -> System.out.println("Invalid input. Try again! ");
             }
         }
     }
@@ -80,13 +84,13 @@ public class App {
                     4) Previous Year
                     5) Search by Vendor
                     0) Back
-                    Enter choice: """);
+                    Enter choice:""");
 
             String choice = scanner.nextLine().trim();
 
+            // Filter by: MONTH TO DATE
             switch (choice) {
 
-                // Filter by: MONTH TO DATE
                 case "1" -> {
                     LocalDate today = LocalDate.now();
 
@@ -153,7 +157,7 @@ public class App {
                 // RETURN BACK
                 case "0" -> inReports = false;
 
-                default -> System.out.println("Invalid input. Try again!");
+                default -> System.out.println("Invalid input. Try again! ");
             }
         }
     }
@@ -192,9 +196,29 @@ public class App {
         LocalDate date = LocalDate.now();
         LocalTime time = LocalTime.now();
 
-        Transaction payment = new Transaction(date, time, description, vendor, amount);
+        Transaction payment = new Transaction(date, time, description, vendor, -amount);
         transactions.add(payment);
         System.out.println("Payment added successfully! ");
+    }
 
+//  Add: Load Transactions from CSV file
+    static final String FileName = "transsction.csv";
+
+    private static void loadTransactions() {
+
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(FileName));
+            String line;
+
+            while ((line = reader.readLine()) != null) {
+                Transaction t = Transaction.fromCSV(line);
+                transactions.add(t);
+            }
+            reader.close();
+            System.out.println("Transactions loaded successfully! ");
+
+        } catch (IOException e) {
+            System.out.println("File not found. Please make sure the file is available and not locked and then try again. ");
+        }
     }
 }

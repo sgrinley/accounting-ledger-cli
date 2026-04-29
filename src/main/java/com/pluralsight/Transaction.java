@@ -2,6 +2,7 @@ package com.pluralsight;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 public class Transaction {
 
@@ -13,6 +14,15 @@ public class Transaction {
     private String vendor;
     private double amount;
 
+
+    //  Improvement: Date+Time formatter for cleaner output
+    private static final DateTimeFormatter DATE_FORMAT =
+        DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+    private static final DateTimeFormatter TIME_FORMAT =
+            DateTimeFormatter.ofPattern("HH:mm:ss");
+
+
     //  Step 2: Generate constructor (for transaction object)
     public Transaction(LocalDate date, LocalTime time, String description, String vendor, double amount) {
         this.date = date;
@@ -20,7 +30,6 @@ public class Transaction {
         this.description = description;
         this.vendor = vendor;
         this.amount = amount;
-
     }
 
     //  Step 3: Generate Getters to access data safely

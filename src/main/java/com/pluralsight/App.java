@@ -91,73 +91,83 @@ public class App {
                     0) Back
                     Enter choice:""");
             String choice = scanner.nextLine().trim();
+
             LocalDate today = LocalDate.now();
 
             switch (choice) {
-
-                // Filter by: MONTH TO DATE
-                case "1" -> {
-                    for (Transaction t : transactions) {
-                        if (t.getDate().getMonthValue() == today.getMonthValue() && t.getDate().getYear() == today.getYear()) {
-                            System.out.println(t);
-                        }
-                    }
-                }
-                // Filter by: PREVIOUS MONTH
-                case "2" -> {
-                    LocalDate prev = today.minusMonths(1);
-
-                    for (Transaction t : transactions) {
-                        if (t.getDate().getMonthValue() == prev.getMonthValue() && t.getDate().getYear() == prev.getYear()) {
-                            System.out.println(t);
-                        }
-                    }
-                }
-                // Filter by: YEAR TO DATE
-                case "3" -> {
-                    for (Transaction t : transactions) {
-                        if (t.getDate().getYear() == today.getYear()) {
-                            System.out.println(t);
-                        }
-                    }
-                }
-                // Filter by: PREVIOUS YEAR
-                case "4" -> {
-                    int lastYear = today.getYear() - 1;
-
-                    for (Transaction t : transactions) {
-                        if (t.getDate().getYear() == lastYear) {
-                            System.out.println(t);
-                        }
-                    }
-                }
-                // SEARCH BY VENDOR
-                case "5" -> {
-                    System.out.print("Enter vendor: ");
-                    String vendor = scanner.nextLine();
-
-                    boolean found = false;
-
-                    for (Transaction t : transactions) {
-                        if (t.getVendor().equalsIgnoreCase(vendor)) {
-                            System.out.println(t);
-                            found = true;
-                        }
-                    }
-
-                    if (!found) {
-                        System.out.println("No transactions found for vendor: " + vendor);
-                    }
-                }
-                // RETURN BACK
+                case "1" -> showMonthToDate(today);
+                case "2" -> showPreviousMonth(today);
+                case "3" -> showYearToDate(today);
+                case "4" -> showPreviousYear(today);
+                case "5" -> searchByVendor();
+                case "6" -> customSearch();
                 case "0" -> inReports = false;
-
                 default -> System.out.println("Invalid input.");
             }
         }
     }
 
-    //  Add Deposit
+    //  Filter by: MONTH TO DATE METHOD
+    private static void showMonthToDate(LocalDate today) {
+        for (Transaction t : transactions) {
+            if (t.getDate().getMonth() == today.getMonth() && t.getDate().getYear() == today.getYear()) {
+                System.out.println(t);
+            }
+        }
+    }
+
+    //  Filter by: PREVIOUS MONTH METHOD
+    private static void showPreviousMonth(LocalDate today) {
+        LocalDate prev = today.minusMonths(1);
+
+        for (Transaction t : transactions) {
+            if (t.getDate().getMonthValue() == prev.getMonthValue() && t.getDate().getYear() == prev.getYear()) {
+                System.out.println(t);
+            }
+        }
+    }
+
+    //  Filter by: YEAR TO DATE METHOD
+    private static void showYearToDate(LocalDate today) {
+        for (Transaction t : transactions) {
+            if (t.getDate().getYear() == today.getYear()) {
+                System.out.println(t);
+            }
+        }
+    }
+
+    //  Filter by: PREVIOUS YEAR METHOD
+    private static void showPreviousYear(LocalDate today) {
+        int lastYear = today.getYear() - 1;
+
+        for (Transaction t : transactions) {
+            if (t.getDate().getYear() == lastYear) {
+                System.out.println(t);
+            }
+        }
+    }
+
+    //  SEARCH BY VENDOR METHOD
+    private static void searchByVendor() {
+        System.out.print("Enter vendor: ");
+        String vendor = scanner.nextLine();
+
+        boolean found = false;
+
+        for (Transaction t : transactions) {
+            if (t.getVendor().equalsIgnoreCase(vendor)) {
+                System.out.println(t);
+                found = true;
+            }
+        }
+        // RETURN BACK
+        if (!found) {
+            System.out.println("No transactions found for vendor: " + vendor);
+        }
+    }
+
+
+    //  ADD: DEPOSITS
     private static void addDeposit() {
 
         System.out.print("Enter Description: ");
@@ -169,13 +179,7 @@ public class App {
         System.out.print("Enter Amount: ");
         double amount = Double.parseDouble(scanner.nextLine());
 
-        Transaction t = new Transaction(
-                LocalDate.now(),
-                LocalTime.now(),
-                description,
-                vendor,
-                amount
-        );
+        Transaction t = new Transaction(LocalDate.now(), LocalTime.now(), description, vendor, amount);
 
         transactions.add(t);
         saveTransaction(t);
@@ -183,7 +187,7 @@ public class App {
         System.out.println("Deposit added successfully! ");
     }
 
-    //  Add Payment
+    //  ADD: PAYMENTS
     private static void addPayment() {
 
         System.out.print("Enter Description: ");
@@ -195,13 +199,7 @@ public class App {
         System.out.print("Enter Amount: ");
         double amount = Double.parseDouble(scanner.nextLine());
 
-        Transaction t = new Transaction(
-                LocalDate.now(),
-                LocalTime.now(),
-                description,
-                vendor,
-                -amount
-        );
+        Transaction t = new Transaction(LocalDate.now(), LocalTime.now(), description, vendor, -amount);
 
         transactions.add(t);
         saveTransaction(t);

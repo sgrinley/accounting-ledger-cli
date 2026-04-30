@@ -88,6 +88,7 @@ public class App {
                     3) Year To Date
                     4) Previous Year
                     5) Search Vendor
+                    6) Custom Search
                     0) Back
                     Enter choice:""");
             String choice = scanner.nextLine().trim();
@@ -147,7 +148,7 @@ public class App {
         }
     }
 
-    //  SEARCH BY VENDOR METHOD
+    //  Filter by: VENDOR METHOD
     private static void searchByVendor() {
         System.out.print("Enter vendor: ");
         String vendor = scanner.nextLine();
@@ -160,13 +161,34 @@ public class App {
                 found = true;
             }
         }
-        // RETURN BACK
+
         if (!found) {
             System.out.println("No transactions found for vendor: " + vendor);
         }
     }
 
+    //  Filter by: CUSTOM SEARCH METHOD
+    private static void customSearch() {
+        System.out.print("Enter search keyword: ");
+        String keyword = scanner.nextLine().toLowerCase();
 
+        boolean found = false;
+
+        for (Transaction t : transactions) {
+
+            boolean matchesVendor = t.getVendor().toLowerCase().contains(keyword);
+            boolean matchesDescription = t.getDescription().toLowerCase().contains(keyword);
+
+            if (matchesVendor || matchesDescription) {
+                System.out.println(t);
+                found = true;
+            }
+        }
+
+        if (!found) {
+            System.out.println("No transactions matched: " + keyword);
+        }
+    }
 
 
     //  ADD: DEPOSITS

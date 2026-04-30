@@ -52,11 +52,6 @@ Transactions are automatically sorted:
 
 ## Project Structure
 
-com.pluralsight
-│
-├── App.java # Main application logic (menus, UI, file handling)
-├── Transaction.java # Transaction model (data + CSV conversion)
-│
 [CLASS: (Accounting Ledger App)]
    │
    └── main() 
@@ -104,6 +99,7 @@ com.pluralsight
 date|time|description|vendor|amount
 
 2023-04-15|10:13:25|ergonomic keyboard|Amazon|-89.50 
+
 2023-04-15|11:15:00|Invoice 1001 paid|Joe|1500.00 
 
 

@@ -1,6 +1,6 @@
 # Transaction Ledger App
 
-Welcome to the Personal Finance Ledger Application, a Java-based console system designed to simulate a real-world financial tracking tool.
+Welcome to the Accounting (Banking) Ledger Application, a Java-based console system designed to simulate a real-world financial tracking tool.
 
 This application allows users to record deposits and payments, categorize transactions, and generate detailed financial reports. All data is persistently stored using a CSV file, ensuring that transactions remain available between sessions.
 

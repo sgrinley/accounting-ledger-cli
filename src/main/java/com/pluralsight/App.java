@@ -36,13 +36,13 @@ public class App {
                     L) Ledger
                     X) Exit
                     Enter choice:""");
-            String choice = scanner.nextLine().toUpperCase().trim();
+            String choice = scanner.nextLine().toLowerCase().trim();
 
             switch (choice) {
-                case "D" -> addDeposit();
-                case "P" -> addPayment();
-                case "L" -> runLedgerScreen();
-                case "X" -> isRunning = false;
+                case "d" -> addDeposit();
+                case "p" -> addPayment();
+                case "l" -> runLedgerScreen();
+                case "x" -> isRunning = false;
                 default -> System.out.println("Invalid input.");
             }
         }
@@ -62,14 +62,14 @@ public class App {
                     R) Reports
                     H) Home
                     Enter choice:""");
-            String choice = scanner.nextLine().toUpperCase().trim();
+            String choice = scanner.nextLine().toLowerCase().trim();
 
             switch (choice) {
-                case "A" -> showAllTransactions();
-                case "D" -> showDeposits();
-                case "P" -> showPayments();
-                case "R" -> runReportsScreen();
-                case "H" -> inLedger = false;
+                case "a" -> showAllTransactions();
+                case "d" -> showDeposits();
+                case "p" -> showPayments();
+                case "r" -> runReportsScreen();
+                case "h" -> inLedger = false;
                 default -> System.out.println("Invalid input.");
             }
         }

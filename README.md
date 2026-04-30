@@ -52,44 +52,7 @@ Transactions are automatically sorted:
 
 ## Project Structure
 
-[CLASS: (Accounting Ledger App)]
-   │
-   └── main() 
-       │
-       ├── loadTransactions()
-       │     └── reads transactions.csv into ArrayList
-       │
-       └── runHomeScreen()  ◄────────────────────────────────────────────┐ [LEVEL 1]
-             │                                                           │
-             ├── (D) Add Deposit ──► addDeposit()                        │
-             │                         └── create Transaction (positive) │
-             │                         └── saveTransaction()             │
-             │
-             ├── (P) Make Payment ──► addPayment()                       │
-             │                         └── create Transaction (negative) │
-             │                         └── saveTransaction()             │
-             │
-             ├── (L) Ledger ───────► runLedgerScreen()  ◄──────────────┤ [LEVEL 2]
-             │                          │
-             │                          ├── (A) All Entries ─► showAllTransactions()
-             │                          │
-             │                          ├── (D) Deposits ───► showDeposits()
-             │                          │
-             │                          ├── (P) Payments ───► showPayments()
-             │                          │
-             │                          ├── (R) Reports ────► runReportsScreen() ◄──┐ [LEVEL 3]
-             │                          │                                           │
-             │                          │     ├── (1) Month To Date                 │
-             │                          │     ├── (2) Previous Month                │
-             │                          │     ├── (3) Year To Date                  │
-             │                          │     ├── (4) Previous Year                 │
-             │                          │     ├── (5) Search by Vendor              │
-             │                          │     ├── (6) Custom Search                 │
-             │                          │     └── (0) Back ───────────────┘
-             │                          │
-             │                          └── (H) Home ───────► runHomeScreen()
-             │
-             └── (X) Exit ─────────────► [Terminate Application]
+![Home Screen](https://github.com/sgrinley/accounting-ledger-cli/blob/main/Flowchart%20Diagram3.png?raw=true)
              
 
 ---

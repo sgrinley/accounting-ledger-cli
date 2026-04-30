@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.Comparator;
 
 public class App {
 
@@ -108,54 +109,70 @@ public class App {
         }
     }
 
-    //  Filter by: MONTH TO DATE METHOD
+    //  Filter by: MONTH TO DATE [METHOD]
     private static void showMonthToDate(LocalDate today) {
-        for (Transaction t : transactions) {
+        boolean found = false;
+
+        for (Transaction t : getSortedTransactions()) {
             if (t.getDate().getMonth() == today.getMonth() && t.getDate().getYear() == today.getYear()) {
                 System.out.println(t);
+                found = true;
             }
         }
+        if (!found) System.out.println("No transactions found. ");
     }
 
-    //  Filter by: PREVIOUS MONTH METHOD
+    //  Filter by: PREVIOUS MONTH [METHOD]
     private static void showPreviousMonth(LocalDate today) {
+        boolean found = false;
+
         LocalDate prev = today.minusMonths(1);
 
-        for (Transaction t : transactions) {
+        for (Transaction t : getSortedTransactions()) {
             if (t.getDate().getMonthValue() == prev.getMonthValue() && t.getDate().getYear() == prev.getYear()) {
                 System.out.println(t);
+                found = true;
             }
         }
+        if (!found) System.out.println("No transactions found. ");
     }
 
-    //  Filter by: YEAR TO DATE METHOD
+    //  Filter by: YEAR TO DATE [METHOD]
     private static void showYearToDate(LocalDate today) {
-        for (Transaction t : transactions) {
+        boolean found = false;
+
+        for (Transaction t : getSortedTransactions()) {
             if (t.getDate().getYear() == today.getYear()) {
                 System.out.println(t);
+                found = true;
             }
         }
+        if (!found) System.out.println("No transactions found. ");
     }
 
-    //  Filter by: PREVIOUS YEAR METHOD
+    //  Filter by: PREVIOUS YEAR [METHOD]
     private static void showPreviousYear(LocalDate today) {
+        boolean found = false;
+
         int lastYear = today.getYear() - 1;
 
-        for (Transaction t : transactions) {
+        for (Transaction t : getSortedTransactions()) {
             if (t.getDate().getYear() == lastYear) {
                 System.out.println(t);
+                found = true;
             }
         }
+        if (!found) System.out.println("No transactions found. ");
     }
 
-    //  Filter by: VENDOR METHOD
+    //  Filter by: VENDOR [METHOD]
     private static void searchByVendor() {
         System.out.print("Enter vendor: ");
         String vendor = scanner.nextLine();
 
         boolean found = false;
 
-        for (Transaction t : transactions) {
+        for (Transaction t : getSortedTransactions()) {
             if (t.getVendor().equalsIgnoreCase(vendor)) {
                 System.out.println(t);
                 found = true;
@@ -167,14 +184,14 @@ public class App {
         }
     }
 
-    //  Filter by: CUSTOM SEARCH METHOD
+    //  Filter by: CUSTOM SEARCH [METHOD]
     private static void customSearch() {
         System.out.print("Enter search keyword: ");
         String keyword = scanner.nextLine().toLowerCase();
 
         boolean found = false;
 
-        for (Transaction t : transactions) {
+        for (Transaction t : getSortedTransactions()) {
 
             boolean matchesVendor = t.getVendor().toLowerCase().contains(keyword);
             boolean matchesDescription = t.getDescription().toLowerCase().contains(keyword);
@@ -278,16 +295,18 @@ public class App {
     }
 
     //  Ledger Helpers (organize ledger display functionality)
+    //  Filter by: SHOWING ALL TRANSACTIONS [METHOD]
     private static void showAllTransactions() {
-        for (Transaction t : transactions) {
+        for (Transaction t : getSortedTransactions()) {
             System.out.println(t);
         }
     }
 
+    //  Filter by: SHOWING DEPOSITS ONLY [METHOD]
     private static void showDeposits() {
         boolean found = false;
 
-        for (Transaction t : transactions) {
+        for (Transaction t : getSortedTransactions()) {
             if (t.getAmount() > 0) {
                 System.out.println(t);
                 found = true;
@@ -297,16 +316,30 @@ public class App {
         if (!found) System.out.println("No deposits found.");
     }
 
+    //  Filter by: SHOWING PAYMENTS ONLY [METHOD]
     private static void showPayments() {
         boolean found = false;
 
-        for (Transaction t : transactions) {
+        for (Transaction t : getSortedTransactions()) {
             if (t.getAmount() < 0) {
                 System.out.println(t);
                 found = true;
             }
         }
 
-        if (!found) System.out.println("No payments found. ");
+        if (!found) System.out.println("No payments found.");
+    }
+
+//    Sorting Helper Method
+    private static ArrayList<Transaction> getSortedTransactions() {
+        ArrayList<Transaction> sorted = new ArrayList<>(transactions);
+
+        sorted.sort(
+                Comparator.comparing(Transaction::getDate)
+                        .thenComparing(Transaction::getTime)
+                        .reversed()
+        );
+
+        return sorted;
     }
 }

@@ -57,7 +57,7 @@ Transactions are automatically sorted:
 
 ---
 
-## 💾 File Format (transactions.csv)
+## File Format (transactions.csv)
 
 date|time|description|vendor|amount
 
@@ -111,7 +111,7 @@ date|time|description|vendor|amount
 
 ---
 
-## 👨‍💻 Author: Shamar Grinley
+## Author: Shamar Grinley
 
 Built as a Java capstone project to demonstrate:
 - Object-Oriented Programming

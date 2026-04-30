@@ -35,7 +35,7 @@ public class App {
                     P) Add Payment
                     L) Ledger
                     X) Exit
-                    Enter choice: """);
+                    Enter choice:""");
             String choice = scanner.nextLine().toUpperCase().trim();
 
             switch (choice) {
@@ -61,7 +61,7 @@ public class App {
                     P) Payments
                     R) Reports
                     H) Home
-                    Enter choice: """);
+                    Enter choice:""");
             String choice = scanner.nextLine().toUpperCase().trim();
 
             switch (choice) {
@@ -89,7 +89,7 @@ public class App {
                     4) Previous Year
                     5) Search Vendor
                     0) Back
-                    Enter choice: """);
+                    Enter choice:""");
             String choice = scanner.nextLine().trim();
             LocalDate today = LocalDate.now();
 
@@ -171,7 +171,7 @@ public class App {
 
         Transaction t = new Transaction(
                 LocalDate.now(),
-                LocalTime.now().withNano(0),
+                LocalTime.now(),
                 description,
                 vendor,
                 amount
@@ -197,7 +197,7 @@ public class App {
 
         Transaction t = new Transaction(
                 LocalDate.now(),
-                LocalTime.now().withNano(0),
+                LocalTime.now(),
                 description,
                 vendor,
                 -amount
@@ -249,6 +249,7 @@ public class App {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_NAME, true))) {
             writer.write(t.toCSV());
             writer.newLine();
+
         } catch (IOException e) {
             System.out.println("Error saving transaction. ");
         }

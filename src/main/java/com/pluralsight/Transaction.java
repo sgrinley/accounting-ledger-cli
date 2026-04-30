@@ -17,7 +17,7 @@ public class Transaction {
 
     //  Improvement: Date+Time formatter for cleaner output
     private static final DateTimeFormatter DATE_FORMAT =
-        DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
     private static final DateTimeFormatter TIME_FORMAT =
             DateTimeFormatter.ofPattern("HH:mm:ss");
@@ -56,7 +56,6 @@ public class Transaction {
     // Step 4: Convert Transaction object into a CSV line (saving data) SERIALIZATION
     public String toCSV() {
         return date + "|" + time + "|" + description + "|" + vendor + "|" + amount;
-
     }
 
     //  Step 5: Convert CSV line into a Transaction object (when reading file) DESERIALIZATION
@@ -75,6 +74,6 @@ public class Transaction {
     // Display format (user view output)
     @Override
     public String toString() {
-        return date + " " + time + " | " + description + " | " + vendor + " | " + String.format("$%.2f", amount);
+        return date + " | " + time + " | " + description + " | " + vendor + " | " + String.format("$%.2f", amount);
     }
 }

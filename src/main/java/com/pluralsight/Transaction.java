@@ -47,19 +47,6 @@ public class Transaction {
     }
 
     //  Step 5: Convert CSV line into a Transaction object (when reading file) DESERIALIZATION
-//    public static Transaction fromCSV(String line) {
-//        String[] parts = line.split("\\|");
-//
-//        LocalDate date = LocalDate.parse(parts[0], DATE_FORMAT);
-//        LocalTime time = LocalTime.parse(parts[1], TIME_FORMAT);
-//
-//        return new Transaction(date,
-//                time,
-//                parts[2],
-//                parts[3],
-//                Double.parseDouble(parts[4])
-//        );
-//    }
     public static Transaction fromCSV(String line) {
         String[] parts = line.split("\\|");
 

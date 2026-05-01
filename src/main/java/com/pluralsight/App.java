@@ -32,8 +32,8 @@ public class App {
 
             System.out.print("""
                     \n--- HOME SCREEN ---
-                    D) Add Deposit
-                    P) Add Payment
+                    D) Add Deposit (Credit +)
+                    P) Add Payment (Debit -)
                     L) Ledger
                     X) Exit
                     Enter choice:""");
@@ -330,7 +330,7 @@ public class App {
         if (!found) System.out.println("No payments found.");
     }
 
-//    Sorting Helper Method
+    //    Sorting Helper Method
     private static ArrayList<Transaction> getSortedTransactions() {
         ArrayList<Transaction> sorted = new ArrayList<>(transactions);
 

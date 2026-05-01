@@ -56,6 +56,16 @@ Transactions are automatically sorted:
 
 ## Project Structure
 
+com.pluralsight
+│
+├── App.java           # Main application + menus
+├── Transaction.java   # Transaction model
+└── Search.java        # Search model
+
+---
+
+## Flow Chart
+
 ![Home Screen](https://github.com/sgrinley/accounting-ledger-cli/blob/main/Flowchart%20Diagram3.png?raw=true)
              
 

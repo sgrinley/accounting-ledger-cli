@@ -55,13 +55,13 @@ Transactions are automatically sorted:
 ---
 
 ## Project Structure
-
+```text
 com.pluralsight
 │
 ├── App.java           # Main application + menus
 ├── Transaction.java   # Transaction model
 └── Search.java        # Search model
-
+```
 ---
 
 ## Flow Chart
